@@ -18,12 +18,13 @@ import { InjectedProps } from "./connectToState";
 const s = StyleSheet.create({
   container: {
     alignItems: "center",
+    width: "100%",
   },
   form: {
     marginTop: 20,
   },
   inputContainer: {
-    marginLeft: 20,
+    marginLeft: 0,
   },
   inputLabel: {
     fontWeight: "bold",
@@ -35,7 +36,7 @@ const s = StyleSheet.create({
 
 const CVC_INPUT_WIDTH = 70;
 const EXPIRY_INPUT_WIDTH = CVC_INPUT_WIDTH;
-const CARD_NUMBER_INPUT_WIDTH_OFFSET = 40;
+const CARD_NUMBER_INPUT_WIDTH_OFFSET = 0;
 const CARD_NUMBER_INPUT_WIDTH =
   Dimensions.get("window").width -
   EXPIRY_INPUT_WIDTH -
@@ -199,62 +200,73 @@ const POSTAL_CODE_INPUT_WIDTH = 120; // https://github.com/yannickcr/eslint-plug
         />
         <ScrollView
           ref="Form"
-          // horizontal
           keyboardShouldPersistTaps="always"
           scrollEnabled={allowScroll}
           showsHorizontalScrollIndicator={false}
           style={s.form}
         >
-          <CCInput
-            {...this._inputProps("number")}
-            keyboardType="numeric"
-            containerStyle={[
-              s.inputContainer,
-              inputContainerStyle,
-              { width: CARD_NUMBER_INPUT_WIDTH },
-            ]}
-          />
-          <CCInput
-            {...this._inputProps("expiry")}
-            keyboardType="numeric"
-            containerStyle={[
-              s.inputContainer,
-              inputContainerStyle,
-              { width: EXPIRY_INPUT_WIDTH },
-            ]}
-          />
-          {requiresCVC && (
+          <View style={{ flexDirection: "row", width: "100%" }}>
             <CCInput
-              {...this._inputProps("cvc")}
+              {...this._inputProps("number")}
               keyboardType="numeric"
               containerStyle={[
                 s.inputContainer,
                 inputContainerStyle,
-                { width: CVC_INPUT_WIDTH },
+                { width: CARD_NUMBER_INPUT_WIDTH },
               ]}
             />
-          )}
-          {requiresName && (
-            <CCInput
-              {...this._inputProps("name")}
-              containerStyle={[
-                s.inputContainer,
-                inputContainerStyle,
-                { width: NAME_INPUT_WIDTH },
-              ]}
-            />
-          )}
-          {requiresPostalCode && (
-            <CCInput
-              {...this._inputProps("postalCode")}
-              keyboardType="numeric"
-              containerStyle={[
-                s.inputContainer,
-                inputContainerStyle,
-                { width: POSTAL_CODE_INPUT_WIDTH },
-              ]}
-            />
-          )}
+          </View>
+          <View style={{ flexDirection: "row", width: "100%", marginTop: 10 }}>
+            <View style={{ marginRight: 10 }}>
+              <CCInput
+                {...this._inputProps("expiry")}
+                keyboardType="numeric"
+                containerStyle={[
+                  s.inputContainer,
+                  inputContainerStyle,
+                  { width: EXPIRY_INPUT_WIDTH },
+                ]}
+              />
+            </View>
+            {requiresCVC && (
+              <View style={{ marginRight: 10 }}>
+                <CCInput
+                  {...this._inputProps("cvc")}
+                  keyboardType="numeric"
+                  containerStyle={[
+                    s.inputContainer,
+                    inputContainerStyle,
+                    { width: CVC_INPUT_WIDTH },
+                  ]}
+                />
+              </View>
+            )}
+            {requiresName && (
+              <View style={{ marginRight: 10 }}>
+                <CCInput
+                  {...this._inputProps("name")}
+                  containerStyle={[
+                    s.inputContainer,
+                    inputContainerStyle,
+                    { width: NAME_INPUT_WIDTH },
+                  ]}
+                />
+              </View>
+            )}
+            {requiresPostalCode && (
+              <View style={{ marginRight: 10 }}>
+                <CCInput
+                  {...this._inputProps("postalCode")}
+                  keyboardType="numeric"
+                  containerStyle={[
+                    s.inputContainer,
+                    inputContainerStyle,
+                    { width: POSTAL_CODE_INPUT_WIDTH },
+                  ]}
+                />
+              </View>
+            )}
+          </View>
         </ScrollView>
       </View>
     );
